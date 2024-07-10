@@ -3,9 +3,72 @@
 
 
 
+// import { Module } from '@nestjs/common';
+// import { TypeOrmModule } from '@nestjs/typeorm';
+// import { ConfigModule } from '@nestjs/config';
+// import { User } from './users/users.model';
+// import { Project } from './projects/projects.model';
+// import { UserProjects } from './projects/user-projects.model';
+
+// @Module({
+//     imports: [
+//         ConfigModule.forRoot({
+//             envFilePath: `${process.env.NODE_ENV}.env`
+//         }),
+//         TypeOrmModule.forRoot({
+//             type: 'postgres',
+//             host: process.env.POSTGRES_HOST,
+//             port: Number(process.env.POSTGRES_PORT),
+//             username: process.env.POSTGRES_USER,
+//             password: process.env.POSTGRES_PASSWORD,
+//             database: process.env.POSTGRES_DB,
+//             entities: [User, Project, UserProjects],
+//             synchronize: true,
+//             autoLoadEntities: true
+//         }),
+//         TypeOrmModule.forFeature([User, Project, UserProjects])
+//     ]
+// })
+// export class AppModule {}
+
+
+// import { Module } from '@nestjs/common';
+// import { TypeOrmModule } from '@nestjs/typeorm';
+// import { ConfigModule } from '@nestjs/config';
+// import { UsersModule } from './users/users.module'; // Добавьте импорт UsersModule
+// import { ProjectsModule } from './projects/projects.module'; // Добавьте импорт ProjectsModule
+
+// @Module({
+//     imports: [
+//         ConfigModule.forRoot({
+//             envFilePath: `${process.env.NODE_ENV}.env`
+//         }),
+//         TypeOrmModule.forRoot({
+//             type: 'postgres',
+//             host: process.env.POSTGRES_HOST,
+//             port: Number(process.env.POSTGRES_PORT),
+//             username: process.env.POSTGRES_USER,
+//             password: process.env.POSTGRES_PASSWORD,
+//             database: process.env.POSTGRES_DB,
+//             entities: [__dirname + '/**/*.entity{.ts,.js}'],
+//             synchronize: true,
+//         }),
+//         UsersModule, // Убедитесь, что модуль пользователей импортирован
+//         ProjectsModule, // Убедитесь, что модуль проектов импортирован
+//     ],
+// })
+// export class AppModule {}
+
+
+
+
+
+
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
+import { ProjectsModule } from './projects/projects.module';
 import { User } from './users/users.model';
 import { Project } from './projects/projects.model';
 import { UserProjects } from './projects/user-projects.model';
@@ -13,7 +76,7 @@ import { UserProjects } from './projects/user-projects.model';
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: `${process.env.NODE_ENV}.env`
+            envFilePath: `${process.env.NODE_ENV}.env`,
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
@@ -22,14 +85,17 @@ import { UserProjects } from './projects/user-projects.model';
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            entities: [User, Project, UserProjects],
+            entities: [User, Project, UserProjects], // Убедитесь, что здесь перечислены все сущности
             synchronize: true,
-            autoLoadEntities: true
+            autoLoadEntities: true,
         }),
-        TypeOrmModule.forFeature([User, Project, UserProjects])
-    ]
+        UsersModule,
+        ProjectsModule,
+    ],
 })
 export class AppModule {}
+
+
 
 
 

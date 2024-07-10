@@ -1,31 +1,64 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Project } from 'src/projects/projects.model';
 import { UserProjects } from 'src/projects/user-projects.model';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
-    @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
+    @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
     @PrimaryGeneratedColumn()
     id: number;
-    @ApiProperty({example: 'user@mail.ru', description: 'Почтовый адрес'})
+
+    @ApiProperty({ example: 'user@mail.ru', description: 'Почтовый адрес' })
     @Column({ type: 'varchar', unique: true, nullable: false })
     email: string;
-    @ApiProperty({example: '12345678', description: 'Пароль'})
+
+    @ApiProperty({ example: '12345678', description: 'Пароль' })
     @Column({ type: 'varchar', nullable: false })
     password: string;
-    @ApiProperty({example: 'true', description: 'Отстранён или нет'})
+
+    @ApiProperty({ example: 'true', description: 'Отстранён или нет' })
     @Column({ type: 'boolean', default: false })
     banned: boolean;
 
-    @ApiProperty({example: 'За халатность', description: 'Причина блокировки'})
+    @ApiProperty({ example: 'За халатность', description: 'Причина блокировки' })
     @Column({ type: 'varchar', nullable: true })
     banReason: string;
 
     @OneToMany(() => UserProjects, userProjects => userProjects.user)
     userProjects: UserProjects[];
-    // userProjects: any;
 }
+
+
+
+
+// import { ApiProperty } from '@nestjs/swagger';
+// import { Project } from 'src/projects/projects.model';
+// import { UserProjects } from 'src/projects/user-projects.model';
+// import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
+
+// @Entity({ name: 'users' })
+// export class User extends BaseEntity {
+//     @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
+//     @PrimaryGeneratedColumn()
+//     id: number;
+//     @ApiProperty({example: 'user@mail.ru', description: 'Почтовый адрес'})
+//     @Column({ type: 'varchar', unique: true, nullable: false })
+//     email: string;
+//     @ApiProperty({example: '12345678', description: 'Пароль'})
+//     @Column({ type: 'varchar', nullable: false })
+//     password: string;
+//     @ApiProperty({example: 'true', description: 'Отстранён или нет'})
+//     @Column({ type: 'boolean', default: false })
+//     banned: boolean;
+
+//     @ApiProperty({example: 'За халатность', description: 'Причина блокировки'})
+//     @Column({ type: 'varchar', nullable: true })
+//     banReason: string;
+
+//     @OneToMany(() => UserProjects, userProjects => userProjects.user)
+//     userProjects: UserProjects[];
+//     userProjects: any;
+// }
 
 
 
